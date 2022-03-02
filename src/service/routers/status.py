@@ -13,9 +13,9 @@ def health():
 
 @bp.route('/shutdown')
 def shutdown():
-    t = Timer(3.0, quit_process)
+    t = Timer(1.0, quit_process)
     t.start()
-    return "will shutdown Monkey server in 3 seconds..."
+    return "will shutdown Monkey server in next second"
 
 
 def quit_process():
