@@ -26,6 +26,10 @@ python3 app.py
 
 Watch git and pull latest code then restart server
 
-```
+```sh
+
+export home="/data/app"
+
+echo "*/5 * * * * python3 ${home}/src/service/watchtower.py" | sudo crontab -
 
 ```
