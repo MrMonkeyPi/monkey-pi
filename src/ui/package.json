@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "ui for Monkey Pi",
   "scripts": {
-    "build": "parcel build index.html",
+    "build": "parcel build index.html --no-cache",
     "dev": "parcel watch index.html"
   },
   "targets": {

@@ -26,30 +26,30 @@ const Header = () => {
 				<i class={isMobileActive ? "gg-close" : "gg-menu"}></i>
 			</button>
 			<header id="header" class="d-flex flex-column justify-content-center">
-				<nav id="navbar" class="navbar nav-menu" style={{display: 'block'}} >
+				<nav id="navbar" class="navbar nav-menu" style={{ display: 'block' }} >
 					<ul>
 						<li>
-							<Link href="/" class="nav-link scrollto" activeClassName='active'>
+							<Link href="/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
 								<i class="gg-home"></i> <span>Home</span>
 							</Link>
 						</li>
 						<li>
-							<Link href="/profile" class="nav-link scrollto" activeClassName='active'>
+							<Link href="/profile/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
 								<i class="gg-user"></i> <span>About</span>
 							</Link>
 						</li>
 						<li>
-							<Link href="/portfolio" class="nav-link scrollto" activeClassName='active'>
+							<Link href="/portfolio/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
 								<i class="gg-album"></i> <span>Portfolio</span>
 							</Link>
 						</li>
 						<li>
-							<Link href="/services" class="nav-link scrollto" activeClassName='active'>
+							<Link href="/services/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
 								<i class="gg-server"></i> <span>Services</span>
 							</Link>
 						</li>
 						<li>
-							<Link href="/contact" class="nav-link scrollto" activeClassName='active'>
+							<Link href="/contact/" class="nav-link scrollto" activeClassName='active'>
 								<i class="gg-phone"></i> <span>Contact</span>
 							</Link>
 						</li>
