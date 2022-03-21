@@ -4,9 +4,10 @@ from flask import Blueprint, request
 
 is_in_pi = os.environ.get('IN_PI') is not None
 if is_in_pi:
-    from robot import walk, led
+    from pi import walk, led
     walk.motor_init()
     led.init()
+    led.loop()
 
 
 bp = Blueprint('/status', __name__)

@@ -34,8 +34,8 @@ const Header = () => {
 							</Link>
 						</li>
 						<li>
-							<Link href="/profile/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
-								<i class="gg-user"></i> <span>About</span>
+							<Link href="/manual/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
+								<i class="gg-user"></i> <span>Manually Control</span>
 							</Link>
 						</li>
 						<li>

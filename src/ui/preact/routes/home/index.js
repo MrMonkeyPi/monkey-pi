@@ -41,13 +41,13 @@ const Home = () => (
 							</button>
 						</p>
 						<p class="text-center">
-							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('left')}>
+							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('spin_left')}>
 								<i class="gg-arrow-left"></i>
 							</button>
 							<button type="button" class="btn btn-outline-secondary p-2 mx-4" onClick={() => walk('stop')}>
 								<i class="gg-play-stop"></i>
 							</button>
-							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('right')}>
+							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('spin_right')}>
 								<i class="gg-arrow-right"></i>
 							</button>
 						</p>
