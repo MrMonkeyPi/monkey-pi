@@ -2,10 +2,11 @@ import os
 from threading import Timer
 from flask import Blueprint, request
 
-is_in_local = os.environ.get('IN_LOCAL') is not None
-if is_in_local: 
-    from robot import walk 
+is_in_pi = os.environ.get('IN_PI') is not None
+if is_in_pi:
+    from robot import walk, led
     walk.motor_init()
+    led.init()
 
 
 bp = Blueprint('/status', __name__)

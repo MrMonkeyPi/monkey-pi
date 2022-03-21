@@ -16,8 +16,13 @@ import 'css.gg/icons/css/airplane.css'
 
 const walk = action => {
 	if (!action) return;
-	fetch(`/api/walk/a/${action}`).then(x => x.json()).then(x => console.log(x)).catch(x => console.error(x))
-}
+	fetch(`/api/robot/walk/${action}`).then(x => x.text()).then(x => console.log(x)).catch(x => console.error(x))
+},
+	led = (action, arg) => {
+		arg = arg || '_'
+		fetch(`/api/robot/led/${action}/${arg}`).then(x => x.text()).then(x => console.log(x)).catch(x => console.error(x))
+	}
+
 
 const Home = () => (
 	<section id="home" class="d-flex flex-column justify-content-center">
@@ -59,7 +64,9 @@ const Home = () => (
 						<p class="text-center"><button type="button" class="btn btn-outline-secondary"><i class="gg-chevron-up"></i></button></p>
 						<p class="text-center">
 							<button type="button" class="btn btn-outline-secondary"><i class="gg-chevron-left"></i></button>
-							<button type="button" class="btn btn-outline-secondary p-2 mx-4" ><i class="gg-edit-shadows"></i></button>
+							<button type="button" class="btn btn-outline-secondary p-2 mx-4" onClick={() => led('loop')}>
+								<i class="gg-edit-shadows"></i>
+							</button>
 							<button type="button" class="btn btn-outline-secondary"><i class="gg-chevron-right"></i></button>
 						</p>
 						<p class="text-center"><button type="button" class="btn btn-outline-secondary"><i class="gg-chevron-down"></i></button></p>

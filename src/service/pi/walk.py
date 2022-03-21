@@ -15,7 +15,6 @@ GPIO.setwarnings(False)
 def motor_init():
     global pwm_ENA
     global pwm_ENB
-    global delaytime
     GPIO.setup(ENA,GPIO.OUT,initial=GPIO.HIGH)
     GPIO.setup(IN1,GPIO.OUT,initial=GPIO.LOW)
     GPIO.setup(IN2,GPIO.OUT,initial=GPIO.LOW)
