@@ -2,6 +2,10 @@ import os
 from threading import Timer
 from flask import Blueprint, request
 
+is_in_local = os.environ.get('IN_LOCAL') is not None
+if is_in_local: 
+    from robot import walk 
+    walk.motor_init()
 
 
 bp = Blueprint('/status', __name__)
@@ -19,4 +23,5 @@ def shutdown():
 
 
 def quit_process():
+    walk.motor_clean()
     os._exit(0)

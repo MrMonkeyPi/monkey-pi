@@ -14,10 +14,15 @@ import 'css.gg/icons/css/chevron-down.css'
 
 import 'css.gg/icons/css/airplane.css'
 
+const walk = action => {
+	if (!action) return;
+	fetch(`/api/walk/a/${action}`).then(x => x.json()).then(x => console.log(x)).catch(x => console.error(x))
+}
+
 const Home = () => (
 	<section id="home" class="d-flex flex-column justify-content-center">
 		<div class="container">
-			<div>lass="text-start
+			<div>
 				<p>I'm <span class="typed" data-typed-items="Developer, Assistant"></span></p>
 				<h1>Mr. Monkey Pi</h1>
 			</div>
@@ -25,13 +30,27 @@ const Home = () => (
 			<div class="position-fixed bottom-0 start-0 end-0 p-3">
 				<div class="d-flex justify-content-between">
 					<div>
-						<p class="text-center"><button type="button" class="btn btn-outline-secondary"><i class="gg-arrow-up"></i></button></p>
 						<p class="text-center">
-							<button type="button" class="btn btn-outline-secondary"><i class="gg-arrow-left"></i></button>
-							<button type="button" class="btn btn-outline-secondary p-2 mx-4" ><i class="gg-play-stop"></i></button>
-							<button type="button" class="btn btn-outline-secondary"><i class="gg-arrow-right"></i></button>
+							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('forward')}>
+								<i class="gg-arrow-up"></i>
+							</button>
 						</p>
-						<p class="text-center"><button type="button" class="btn btn-outline-secondary"><i class="gg-arrow-down"></i></button></p>
+						<p class="text-center">
+							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('left')}>
+								<i class="gg-arrow-left"></i>
+							</button>
+							<button type="button" class="btn btn-outline-secondary p-2 mx-4" onClick={() => walk('stop')}>
+								<i class="gg-play-stop"></i>
+							</button>
+							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('right')}>
+								<i class="gg-arrow-right"></i>
+							</button>
+						</p>
+						<p class="text-center">
+							<button type="button" class="btn btn-outline-secondary" onClick={() => walk('back')}>
+								<i class="gg-arrow-down"></i>
+							</button>
+						</p>
 					</div>
 					<div class="d-flex align-items-end">
 						<p class="text-center"><button type="button" class="btn btn-outline-secondary"><i class="gg-airplane"></i></button></p>
