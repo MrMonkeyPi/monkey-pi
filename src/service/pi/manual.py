@@ -50,7 +50,7 @@ LdrSensorLeft = 7
 LdrSensorRight = 6
 
 
-WalkSpeed = 80
+WalkSpeed = 60
 
 infrared_track_value = ''
 infrared_avoid_value = ''
@@ -176,6 +176,11 @@ def stop():
     GPIO.output(IN4, GPIO.LOW)
 
 
+def set_walk_speed(i):
+    global WalkSpeed
+    WalkSpeed = max(min(i*20, 100), 20)
+
+
 def walk_speed_up():
     global WalkSpeed
     WalkSpeed = min(WalkSpeed + 20, 100)
@@ -241,6 +246,11 @@ def follow_light_test():
     LDR_value = ''.join(LDR_value_list)
 
 
+def fan():
+    GPIO.output(OutfirePin, not GPIO.input(OutfirePin))
+    time.sleep(1)
+
+
 def beep():
     GPIO.output(buzzer, GPIO.LOW)
     time.sleep(0.1)
@@ -262,44 +272,36 @@ def camera_up():
     global ServoUpDownPos
     pos = ServoUpDownPos
     set_camera_servo_UD_detection(pos)
-    # time.sleep(0.05)
-    pos += 0.7
-    ServoUpDownPos = pos
-    if ServoUpDownPos >= 180:
-        ServoUpDownPos = 180
+    time.sleep(0.5)
+    pos += 3
+    ServoUpDownPos = min(pos, 180)
 
 
 def camera_down():
     global ServoUpDownPos
     pos = ServoUpDownPos
     set_camera_servo_UD_detection(pos)
-    # time.sleep(0.05)
-    pos -= 0.7
-    ServoUpDownPos = pos
-    if ServoUpDownPos <= 45:
-        ServoUpDownPos = 45
+    time.sleep(0.5)
+    pos -= 3
+    ServoUpDownPos = max(pos, 45)
 
 
 def camera_left():
     global ServoLeftRightPos
     pos = ServoLeftRightPos
     set_camera_servo_LR_detection(pos)
-    # time.sleep(0.10)
-    pos += 0.7
-    ServoLeftRightPos = pos
-    if ServoLeftRightPos >= 180:
-        ServoLeftRightPos = 180
+    time.sleep(0.5)
+    pos += 3
+    ServoLeftRightPos = min(pos, 180)
 
 
 def camera_right():
     global ServoLeftRightPos
     pos = ServoLeftRightPos
     set_camera_servo_LR_detection(pos)
-    # time.sleep(0.10)
-    pos -= 0.7
-    ServoLeftRightPos = pos
-    if ServoLeftRightPos <= 0:
-        ServoLeftRightPos = 0
+    time.sleep(0.5)
+    pos -= 3
+    ServoLeftRightPos = max(pos, 0)
 
 
 def front_servo_left():
@@ -323,7 +325,6 @@ def all_servo_stop():
     pwm_LeftRightServo.ChangeDutyCycle(0)
     pwm_UpDownServo.ChangeDutyCycle(0)
     pwm_FrontServo.ChangeDutyCycle(0)
-
 
 
 #     init()
