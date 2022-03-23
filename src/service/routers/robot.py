@@ -21,7 +21,10 @@ if is_in_pi:
         'camera_left': manual.camera_left,
         'camera_right': manual.camera_right,
         'all_servo_init': manual.all_servo_init,
-        'all_servo_stop': manual.all_servo_stop
+        'all_servo_stop': manual.all_servo_stop,
+        'auto_pilot': manual.auto_pilot,
+        'stop_auto_pilot': manual.stop_auto_pilot,
+        # 'follow_infrared': 
     }
 
 bp = Blueprint('/robot', __name__)

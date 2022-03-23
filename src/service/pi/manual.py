@@ -1,13 +1,12 @@
 
 import RPi.GPIO as GPIO
 import time
-
+import threading
 
 ServoLeftRightPos = 90
 ServoUpDownPos = 90
 g_frontServoPos = 90
 g_nowfrontPos = 0
-
 
 # engines of wheels
 IN1 = 20
@@ -51,6 +50,7 @@ LdrSensorRight = 6
 
 
 WalkSpeed = 60
+is_Auto_Pilot = False
 
 infrared_track_value = ''
 infrared_avoid_value = ''
@@ -248,7 +248,7 @@ def follow_light_test():
 
 def fan():
     GPIO.output(OutfirePin, not GPIO.input(OutfirePin))
-    time.sleep(1)
+    time.sleep(0.5)
 
 
 def beep():
@@ -272,7 +272,7 @@ def camera_up():
     global ServoUpDownPos
     pos = ServoUpDownPos
     set_camera_servo_UD_detection(pos)
-    time.sleep(0.5)
+    time.sleep(0.1)
     pos += 3
     ServoUpDownPos = min(pos, 180)
 
@@ -281,7 +281,7 @@ def camera_down():
     global ServoUpDownPos
     pos = ServoUpDownPos
     set_camera_servo_UD_detection(pos)
-    time.sleep(0.5)
+    time.sleep(0.1)
     pos -= 3
     ServoUpDownPos = max(pos, 45)
 
@@ -290,7 +290,7 @@ def camera_left():
     global ServoLeftRightPos
     pos = ServoLeftRightPos
     set_camera_servo_LR_detection(pos)
-    time.sleep(0.5)
+    time.sleep(0.1)
     pos += 3
     ServoLeftRightPos = min(pos, 180)
 
@@ -299,7 +299,7 @@ def camera_right():
     global ServoLeftRightPos
     pos = ServoLeftRightPos
     set_camera_servo_LR_detection(pos)
-    time.sleep(0.5)
+    time.sleep(0.1)
     pos -= 3
     ServoLeftRightPos = max(pos, 0)
 
@@ -327,8 +327,85 @@ def all_servo_stop():
     pwm_FrontServo.ChangeDutyCycle(0)
 
 
+def stop_auto_pilot():
+    global is_Auto_Pilot
+    is_Auto_Pilot = False
+    return True
+
+
+def auto_pilot():
+    global is_Auto_Pilot
+    if is_Auto_Pilot:
+        return False
+
+    is_Auto_Pilot = True
+    threading.Thread(target=_run_avoid_obstacle).start()
+    return True
+
+
+def _detect_obstacle():
+    global WalkSpeed
+
+    set_led_rgb(255, 0, 0)
+    WalkSpeed = 20
+    back()
+    time.sleep(0.08)
+    stop()
+
+    set_front_servo_detection(0)
+    time.sleep(0.8)
+    right_dist = get_Distance()
+
+    set_front_servo_detection(180)
+    time.sleep(0.8)
+    left_dist = get_Distance()
+
+    set_front_servo_detection(90)
+    time.sleep(0.8)
+    front_dist = get_Distance()
+
+    if left_dist < 30 and right_dist < 30 and front_dist < 30:
+        set_led_rgb(255, 0, 0)
+        WalkSpeed = 80
+        spin_right()
+        time.sleep(0.58)
+    elif left_dist > right_dist:
+        WalkSpeed = 80
+        spin_left()
+        time.sleep(0.58)
+    else:
+        WalkSpeed = 85
+        spin_left()
+        time.sleep(0.28)
+
+
+def _run_avoid_obstacle():
+    global is_Auto_Pilot
+    global WalkSpeed
+
+    while is_Auto_Pilot:
+        dist = get_Distance()
+        if dist > 30:
+            leftFree = GPIO.input(AvoidSensorLeft)
+            rightFree = GPIO.input(AvoidSensorRight)
+
+            WalkSpeed = 20
+            if leftFree == True and rightFree == False:
+                spin_left()
+            elif leftFree == False:
+                spin_right()
+
+            time.sleep(0.08)
+            WalkSpeed = 60
+            forward()
+            set_led_rgb(0, 255, 0)
+        else:
+            _detect_obstacle()
+
+
 #     init()
 #     all_servo_init()
+
 
 def clean():
     pwm_ENA.stop()

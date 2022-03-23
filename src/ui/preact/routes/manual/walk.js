@@ -23,7 +23,7 @@ const DO = action => {
 },
     setCamera = (dir) => {
         fetch(`/api/robot/do/${dir}`)
-            .then(() => setTimeout(() => fetch(`/api/robot/do/all_servo_stop`), 500))
+            .then(() => setTimeout(() => fetch(`/api/robot/do/all_servo_stop`), 200))
     },
     setLED = (r, g, b) => {
         fetch(`/api/robot/led/${r}/${g}/${b}`).then(x => x.text()).then(x => console.log(x))
@@ -37,6 +37,18 @@ const WalkPanel = () => {
         updateSpeed = s => {
             setSpeed(s)
             fetch(`/api/robot/set/walk_speed/${s}`)
+        },
+        [autoPilot, setAutoPilot] = useState(false),
+        updateAutoPilot = () => {
+            setAutoPilot(!autoPilot)
+            let action = !autoPilot ? 'auto_pilot' : 'stop_auto_pilot'
+            fetch(`/api/robot/do/${action}`)
+        },
+        [followInfrared, setFollowInfrared] = useState(false),
+        updateFollowInfrared = () => {
+            setFollowInfrared(!followInfrared)
+            let action = !followInfrared ? 'follow_infrared' : 'stop_follow_infrared'
+            fetch(`/api/robot/do/${action}`)
         }
 
     return (
@@ -107,8 +119,10 @@ const WalkPanel = () => {
             </div>
             <div class="d-flex justify-content-around my-5 btn-s">
                 <button type="button" class="btn btn-outline-secondary" onClick={() => DO('fan')}>Fan</button>
-                <button type="button" class="btn btn-outline-primary long-btn" >Random Walk</button>
-                <button type="button" class="btn btn-outline-primary long-btn">Follow Light</button>
+                <button type="button" class={autoPilot ? 'btn btn-outline-danger long-btn' : 'btn btn-outline-primary long-btn'}
+                    onClick={() => updateAutoPilot()} >Auto Pilot</button>
+                <button type="button" class={followInfrared ? 'btn btn-outline-danger long-btn' : 'btn btn-outline-primary long-btn'}
+                    onClick={() => updateFollowInfrared()} >Follow Me</button>
                 <button type="button" class="btn btn-outline-secondary" onClick={() => DO('beep')}>Beep</button>
             </div>
 

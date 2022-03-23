@@ -38,5 +38,5 @@ def shutdown():
 
 
 def quit_process():
-    walk.motor_clean()
+    manual.clean()
     os._exit(0)
