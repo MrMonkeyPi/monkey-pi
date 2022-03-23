@@ -2,6 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 import threading
+import random
 
 ServoLeftRightPos = 90
 ServoUpDownPos = 90
@@ -174,6 +175,7 @@ def stop():
     GPIO.output(IN2, GPIO.LOW)
     GPIO.output(IN3, GPIO.LOW)
     GPIO.output(IN4, GPIO.LOW)
+    all_servo_stop()
 
 
 def set_walk_speed(i):
@@ -197,10 +199,10 @@ def get_Distance():
     GPIO.output(TrigPin, GPIO.LOW)
     while not GPIO.input(EchoPin):
         pass
-        t1 = time.time()
+    t1 = time.time()
     while GPIO.input(EchoPin):
         pass
-        t2 = time.time()
+    t2 = time.time()
     time.sleep(0.01)
     return ((t2 - t1) * 340 / 2) * 100
 
@@ -330,17 +332,16 @@ def all_servo_stop():
 def stop_auto_pilot():
     global is_Auto_Pilot
     is_Auto_Pilot = False
-    return True
+    stop()
 
 
 def auto_pilot():
     global is_Auto_Pilot
     if is_Auto_Pilot:
-        return False
+        return
 
     is_Auto_Pilot = True
     threading.Thread(target=_run_avoid_obstacle).start()
-    return True
 
 
 def _detect_obstacle():
@@ -349,7 +350,7 @@ def _detect_obstacle():
     set_led_rgb(255, 0, 0)
     WalkSpeed = 20
     back()
-    time.sleep(0.08)
+    time.sleep(0.5)
     stop()
 
     set_front_servo_detection(0)
@@ -364,19 +365,17 @@ def _detect_obstacle():
     time.sleep(0.8)
     front_dist = get_Distance()
 
+    WalkSpeed = 10
     if left_dist < 30 and right_dist < 30 and front_dist < 30:
         set_led_rgb(255, 0, 0)
-        WalkSpeed = 80
         spin_right()
-        time.sleep(0.58)
+        time.sleep(1.2)
     elif left_dist > right_dist:
-        WalkSpeed = 80
         spin_left()
-        time.sleep(0.58)
+        time.sleep(0.7)
     else:
-        WalkSpeed = 85
-        spin_left()
-        time.sleep(0.28)
+        spin_right()
+        time.sleep(0.7)
 
 
 def _run_avoid_obstacle():
@@ -389,14 +388,19 @@ def _run_avoid_obstacle():
             leftFree = GPIO.input(AvoidSensorLeft)
             rightFree = GPIO.input(AvoidSensorRight)
 
-            WalkSpeed = 20
+            WalkSpeed = 10
             if leftFree == True and rightFree == False:
                 spin_left()
-            elif leftFree == False:
+            elif leftFree == False and rightFree == True:
                 spin_right()
+            elif leftFree == False and rightFree == False:
+                if random.random() > 0.5:
+                    spin_right()
+                else:
+                    spin_left()
 
-            time.sleep(0.08)
-            WalkSpeed = 60
+            time.sleep(0.3)
+            WalkSpeed = 30
             forward()
             set_led_rgb(0, 255, 0)
         else:
