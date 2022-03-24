@@ -332,6 +332,7 @@ def all_servo_stop():
 def stop_auto_pilot():
     global is_Auto_Pilot
     is_Auto_Pilot = False
+    time.sleep(0.5)
     stop()
 
 
@@ -348,7 +349,7 @@ def _detect_obstacle():
     global WalkSpeed
 
     set_led_rgb(255, 0, 0)
-    WalkSpeed = 20
+    WalkSpeed = 25
     back()
     time.sleep(0.5)
     stop()
@@ -369,13 +370,13 @@ def _detect_obstacle():
     if left_dist < 30 and right_dist < 30 and front_dist < 30:
         set_led_rgb(255, 0, 0)
         spin_right()
-        time.sleep(1.2)
+        time.sleep(1.6)
     elif left_dist > right_dist:
         spin_left()
-        time.sleep(0.7)
+        time.sleep(0.8)
     else:
         spin_right()
-        time.sleep(0.7)
+        time.sleep(0.8)
 
 
 def _run_avoid_obstacle():
@@ -399,8 +400,8 @@ def _run_avoid_obstacle():
                 else:
                     spin_left()
 
-            time.sleep(0.3)
-            WalkSpeed = 30
+            time.sleep(0.2)
+            WalkSpeed = 20
             forward()
             set_led_rgb(0, 255, 0)
         else:

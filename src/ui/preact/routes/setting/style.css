@@ -1,0 +1,31 @@
+#setting {
+	text-align: center;
+}
+
+.panel-box {
+	max-width: 90%;
+	margin: auto;
+}
+
+.panel-box p {
+	font-size: .8rem;
+}
+
+.panel-box>div {
+	width: 20rem;
+	height: 10rem;
+	border-radius: 9rem 9rem 0 0;
+	position: relative;
+	overflow: hidden;
+}
+
+.panel-box .sensor-left {
+	height: 10rem;
+	width: 9rem;
+}
+
+.panel-box .spinner-grow {
+	position: absolute;
+	bottom: -1rem;
+	left: 9rem;
+}

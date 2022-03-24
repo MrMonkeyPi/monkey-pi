@@ -39,8 +39,8 @@ const Header = () => {
 							</Link>
 						</li>
 						<li>
-							<Link href="/portfolio/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
-								<i class="gg-album"></i> <span>Portfolio</span>
+							<Link href="/setting/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
+								<i class="gg-album"></i> <span>Sensor Calibration </span>
 							</Link>
 						</li>
 						<li>
