@@ -1,4 +1,5 @@
 from flask import Flask
+from werkzeug.serving import WSGIRequestHandler
 
 from routers import status, setting, robot
 
@@ -27,4 +28,5 @@ def not_found(e):
   return app.send_static_file('index.html')
 
 if __name__ == "__main__":
+    WSGIRequestHandler.protocol_version = "HTTP/1.1"
     app.run(debug=True, host = '0.0.0.0', port = 2323)

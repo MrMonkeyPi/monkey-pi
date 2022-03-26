@@ -389,18 +389,21 @@ def _run_avoid_obstacle():
             leftFree = GPIO.input(AvoidSensorLeft)
             rightFree = GPIO.input(AvoidSensorRight)
 
-            WalkSpeed = 10
+            WalkSpeed = 20
             if leftFree == True and rightFree == False:
-                spin_left()
+                set_led_rgb(255, 255, 0)
+                left()
             elif leftFree == False and rightFree == True:
-                spin_right()
+                set_led_rgb(255, 255, 0)
+                right()
             elif leftFree == False and rightFree == False:
+                set_led_rgb(255, 255, 0)
                 if random.random() > 0.5:
-                    spin_right()
+                    right()
                 else:
-                    spin_left()
+                    left()
 
-            time.sleep(0.2)
+            time.sleep(0.3)
             WalkSpeed = 20
             forward()
             set_led_rgb(0, 255, 0)
@@ -411,6 +414,10 @@ def _run_avoid_obstacle():
 #     init()
 #     all_servo_init()
 
+def get_infrared_sensor_status():
+    leftStatus = GPIO.input(AvoidSensorLeft)
+    rightRight = GPIO.input(AvoidSensorRight)
+    return [leftStatus, rightRight]
 
 def clean():
     pwm_ENA.stop()

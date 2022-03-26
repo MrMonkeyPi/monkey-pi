@@ -1,7 +1,9 @@
 import shelve
 import os
+import time
 from flask import Blueprint, request
 
+infrared_result = [False, False]
 actionDict = {}
 is_in_pi = os.environ.get('IN_PI') is not None
 if is_in_pi:
@@ -24,7 +26,7 @@ if is_in_pi:
         'all_servo_stop': manual.all_servo_stop,
         'auto_pilot': manual.auto_pilot,
         'stop_auto_pilot': manual.stop_auto_pilot,
-        # 'follow_infrared': 
+        # 'follow_infrared':
     }
 
 bp = Blueprint('/robot', __name__)
@@ -60,3 +62,23 @@ def led(red, green, blue):
         return ' '.join(['set success:', str(red), str(green), str(blue)])
 
     return ' '.join(['ignore:', str(red), str(green), str(blue)])
+
+
+# there is no websocket package in pi
+@bp.route('/sensor/infrared/status', methods=['GET'])
+def infrared_status():
+    global infrared_result
+    if is_in_pi:
+        result = manual.get_infrared_sensor_status()
+        print(result)
+        counter = 30 / 0.05
+        while infrared_result[0] == result[0] and infrared_result[1] == result[1] and counter > 0:
+            counter -= 1
+            time.sleep(0.05)
+            result = manual.get_infrared_sensor_status()
+
+        infrared_result = result
+        return ','.join([str(result[0]), str(result[1])])
+    
+    time.sleep(3)
+    return '1,1'

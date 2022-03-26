@@ -12,16 +12,37 @@
 }
 
 .panel-box>div {
+	margin: auto;
 	width: 20rem;
 	height: 10rem;
-	border-radius: 9rem 9rem 0 0;
+	border-radius: 10rem 10rem 0 0;
 	position: relative;
 	overflow: hidden;
 }
 
 .panel-box .sensor-left {
 	height: 10rem;
-	width: 9rem;
+	width: 10rem;
+	background-image: linear-gradient(to right bottom, #dc3545,#f1aeb5);
+}
+
+.panel-box .sensor-right {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 10rem;
+	width: 10rem;
+	background-image: linear-gradient(to left bottom, #dc3545,#f1aeb5);
+}
+
+.sensor-inner {
+	position: absolute;
+	bottom: 0;
+	width: 10rem;
+	height: 5rem;
+	border-radius: 5rem 5rem 0 0;
+	border-color: #f1aeb5;
+	background-color: #b5e6f1;
 }
 
 .panel-box .spinner-grow {
