@@ -1,0 +1,17 @@
+#service button.btn{
+	padding: 0;
+}
+
+#service .rule-box{
+	width: 18rem;
+	display: inline;
+	max-width: 80%;
+}
+
+#service .btn_close {
+	color: #dc3545;
+}
+
+#service .long-btn {
+	width: 8rem;
+}

@@ -1,7 +1,7 @@
 from flask import Flask
 from werkzeug.serving import WSGIRequestHandler
 
-from routers import status, setting, robot
+from routers import status, setting, robot, service
 
 app = Flask(__name__,
             static_url_path='/', 
@@ -13,6 +13,7 @@ app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 app.register_blueprint(status.bp, url_prefix= "/api/status")
 app.register_blueprint(setting.bp, url_prefix= "/api/setting")
 app.register_blueprint(robot.bp, url_prefix= "/api/robot")
+app.register_blueprint(service.bp, url_prefix= "/api/service")
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

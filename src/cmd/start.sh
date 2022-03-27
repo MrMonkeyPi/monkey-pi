@@ -8,5 +8,5 @@ npm i && npm run build
 cd ../service
 
 . venv/bin/activate
-export MEDIA_HOME=/some/media/root1/:/some/media/root2/ && python3 setup.py
+export MEDIA_HOME=/media/srepond/Projects/MonkeyPi/Audio/:/some/other/path && python3 setup.py
 python3 app.py

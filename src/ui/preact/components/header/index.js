@@ -34,6 +34,11 @@ const Header = () => {
 							</Link>
 						</li>
 						<li>
+							<Link href="/service/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
+								<i class="gg-server"></i> <span>Services</span>
+							</Link>
+						</li>
+						<li>
 							<Link href="/manual/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
 								<i class="gg-user"></i> <span>Manually Control</span>
 							</Link>
@@ -41,11 +46,6 @@ const Header = () => {
 						<li>
 							<Link href="/setting/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
 								<i class="gg-album"></i> <span>Sensor Calibration </span>
-							</Link>
-						</li>
-						<li>
-							<Link href="/services/" class="nav-link scrollto" activeClassName='active' onClick={toggleMenu}>
-								<i class="gg-server"></i> <span>Services</span>
 							</Link>
 						</li>
 						<li>

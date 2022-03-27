@@ -1,1 +1,0 @@
-# aplay -Dhw:1,0 /usr/share/sounds/alsa/Rear_Center.wav
